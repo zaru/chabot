@@ -1,8 +1,30 @@
-[info][title]プッシュのお知らせ♪[/title]
+<%
+if (typeof object_kind !== 'undefined' && object_kind == 'merge_request') {
+%>[info][title]マージリクエストのお知らせ[/title]
+リクエスト名：<%= object_attributes.title %>
+マージ対象：<%= object_attributes.source_branch %> → <%= object_attributes.target_branch %>
+[/info]
+<%
+} else if (typeof object_kind !== 'undefined' && object_kind == 'issue') {
+%>[info][title]issueのお知らせ[/title]
+issue名：<%= object_attributes.title %>
+状態：<%= object_attributes.state %>
+[/info]
+<%
+} else { 
+%>
+[info][title]プッシュのお知らせ[/title]
 リポジトリ：<%= repository.name %>
 コミッター：<%= user_name %>
-[hr]<% for(var i=0; i<commits.length; i++) {%>
+[hr]<%
+	for(var i=0; i<commits.length; i++) {
+%>
    <%= commits[i].message %>
    <%= commits[i].url %>
-<% } %>
+<%
+	}
+%>
 [/info]
+<%
+}
+%>
